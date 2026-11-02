@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>YUDDH ARENA</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:white;font-family:Arial,sans-serif;padding-bottom:85px}
+header{padding:25px 18px;background:#151515;border-bottom:1px solid #333}
+h1{margin:0;color:#f22;font-size:27px;letter-spacing:2px}
+header p{color:#aaa;margin:7px 0 0}
+.hero{margin:16px;padding:22px;background:linear-gradient(135deg,#460909,#151515);border:1px solid #702020;border-radius:18px}
+.hero h2{margin:0 0 8px}.hero p{color:#ddd}
+h3{margin:22px 16px 12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px}
+.item{background:#191919;border:1px solid #333;padding:17px 12px;border-radius:14px;min-height:90px}
+.item b{display:block;margin-bottom:7px}
+.item small{color:#aaa}
+button{background:#ed2525;color:white;border:0;border-radius:10px;padding:12px;font-weight:bold}
+.match{margin:12px 16px;padding:16px;background:#191919;border:1px solid #333;border-radius:14px}
+.match p{color:#bbb;font-size:13px}
+.match button{width:100%}
+nav{position:fixed;bottom:0;left:0;right:0;background:#171717ee;border-top:1px solid #444;display:flex;justify-content:space-around;padding:14px 3px}
+nav button{background:transparent;color:white;padding:8px;font-size:12px}
+.page{display:none}.page.active{display:block}
+</style>
+</head>
+<body>
+<header>
+<h1>YUDDH ARENA</h1>
+<p>Free Fire Tournament Platform</p>
+</header>
+
+<section id="home" class="page active">
+<div class="hero">
+<h2>WELCOME, PLAYER!</h2>
+<p>Enter the arena. Play to win.</p>
+<button onclick="show('matches')">Explore Matches</button>
+</div>
+<h3>Game Categories</h3>
+<div class="grid" id="categories"></div>
+<h3>Featured Matches</h3>
+<div class="match">
+<b>Daily Free Match</b>
+<p>Entry Fee: FREE | Free Fire</p>
+<button onclick="show('matches')">View Matches</button>
+</div>
+</section>
+
+<section id="matches" class="page">
+<h3>Available Matches</h3>
+<div id="matchlist"></div>
+</section>
+
+<section id="mine" class="page">
+<h3>My Matches</h3>
+<div class="match">Your joined matches will appear here.</div>
+</section>
+
+<section id="profile" class="page">
+<h3>Player Profile</h3>
+<div class="match">
+<p>Player Name</p>
+<input id="player" placeholder="Enter your name">
+<p>Free Fire UID</p>
+<input id="uid" placeholder="Enter your Free Fire UID">
+<br><br><button onclick="save()">Save Profile</button>
+<p id="saved"></p>
+</div>
+</section>
+
+<nav>
+<button onclick="show('home')">⌂ Home</button>
+<button onclick="show('matches')">⚔ Matches</button>
+<button onclick="show('mine')">My Matches</button>
+<button onclick="show('profile')">Profile</button>
+</nav>
+
+<script>
+const modes=["BR Survival","BR Per Kill Matches","Clash Squad 1v1","Lone Wolf 1v1","Clash Squad 4v4","Lone Wolf 2v2","CS Headshot","Only UMP 1v1","CS Challenges","Free Matches"];
+document.getElementById('categories').innerHTML=modes.map(x=>`<div class="item"><b>${x}</b><small>Free Fire Tournament</small></div>`).join('');
+document.getElementById('matchlist').innerHTML=
+[["Daily Free Match","FREE"],["Solo BR Tournament","₹10"],["Clash Squad 1v1","₹20"],["BR Survival","₹30"]].map(x=>`<div class="match"><b>${x[0]}</b><p>Entry Fee: ${x[1]}</p><button onclick="join('${x[0]}')">Join Match</button></div>`).join('');
+function show(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function join(name){alert(name+" selected. Match registration backend is not connected yet.");}
+function save(){localStorage.setItem('ya_player',document.getElementById('player').value);localStorage.setItem('ya_uid',document.getElementById('uid').value);document.getElementById('saved').innerText='Profile saved on this device!';}
+document.getElementById('player').value=localStorage.getItem('ya_player')||'';
+document.getElementById('uid').value=localStorage.getItem('ya_uid')||'';
+</script>
+</body>
+</html>
